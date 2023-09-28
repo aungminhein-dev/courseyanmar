@@ -1,0 +1,101 @@
+.video-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+    align-items: flex-start;
+    padding: 5px 5%;
+}
+
+.video-container .main-video {
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.video-container .main-video video {
+    width: 100%;
+    border-radius: 5px;
+    height: 500px;
+}
+
+.video-container .main-video .lesson-title {
+    color: #333;
+    font-size: 23px;
+    padding: 0px 15px;
+}
+
+.video-container .video-list {
+    padding: 10px;
+    border-radius: 5px;
+    height: 550px;
+    overflow-y: scroll;
+}
+
+.video-container .video-list::-webkit-scrollbar {
+    width: 7px;
+}
+
+.video-container .video-list::-webkit-scrollbar-track {
+    background: #ccc;
+    border-radius: 50px;
+}
+
+.video-container .video-list::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 50px;
+}
+
+.video-container .video-list .vid video {
+    width: 100px;
+    border-radius: 10px;
+}
+
+.video-container .video-list .vid {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.video-container .video-list .vid .lesson-title {
+    color: #f7f7f7;
+    font-size: 17px;
+    transition: 0.5s;
+}
+
+.video-container .video-list .vid:hover {
+    background: rgba(20, 19, 20, 0.13) !important;
+}
+
+.video-container .video-list .active {
+    background: rgba(20, 19, 20, 0.13) !important;
+}
+
+.video-container .video-list .active .lesson-title,
+.video-container .video-list .vid:hover .lesson-title {
+    color: black
+}
+
+@media (max-width :991px) {
+    .video-container {
+        grid-template-columns: 1.5fr 1fr;
+        padding: 10px;
+    }
+}
+
+@media (max-width :768px) {
+    .video-container {
+        grid-template-columns: 1fr;
+        padding: 0;
+    }
+    .video-container .main-video video {
+        width: 100%;
+        border-radius: 5px;
+        height: 300px;
+
+    }
+}

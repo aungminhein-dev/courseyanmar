@@ -1,0 +1,46 @@
+.my-input{
+    border-radius : 5px 0 0 5px;
+}
+.my-btn{
+    border-radius: 0 5px 5px 0;
+}
+.switcher li{
+    cursor: pointer;
+}
+.bounce{
+    animation: bounce 1s infinite backwards;
+}
+@keyframes bounce {
+    0%{
+        transform: scale(1);
+    }50%{
+        transform: scale(1.1);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.icon {
+    width: 3rem;
+    height: 3rem;
+}
+
+.icon i {
+    font-size: 2.25rem;
+}
+
+.icon-shape {
+    display: inline-flex;
+    padding: 12px;
+    text-align: center;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-shape i {
+    font-size: 1.25rem;
+}
