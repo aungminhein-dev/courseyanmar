@@ -27,21 +27,19 @@
                         href="javascript:void();">
                         <i class="fa fa-bell-o"></i></a>
                 </li>
-                <li class="nav-item language">
-                    <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown"
-                        href="javascript:void();"><i class="fa fa-flag"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-item"> <i class="flag-icon flag-icon-gb mr-2"></i> English</li>
-                        <li class="dropdown-item"> <i class="flag-icon flag-icon-fr mr-2"></i> French</li>
-                        <li class="dropdown-item"> <i class="flag-icon flag-icon-cn mr-2"></i> Chinese</li>
-                        <li class="dropdown-item"> <i class="flag-icon flag-icon-de mr-2"></i> German</li>
-                    </ul>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
-                        <span class="user-profile"><img
+                        <span class="user-profile">
+                            @if (Auth::user()->image)
+                                <img
+                                src="{{asset('storage/'.Auth::user()->image)}}"
+                                class="img-circle" alt="user avatar">
+                            @else
+                                <img
                                 src="{{ Auth::user()->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.jpg') }}"
-                                class="img-circle" alt="user avatar"></span>
+                                class="img-circle" alt="user avatar">
+                            @endif
+                        </span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-item user-details">

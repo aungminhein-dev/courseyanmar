@@ -7,15 +7,12 @@
 
                     Admin List
                     <div class="card-action">
-                        <form class="search-bar d-flex" role="search" method="get">
-                            <input class="form-control me-2 my-input" name="searchKey" type="search" placeholder="Search"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success btn-sm" type="submit">Search</button>
-                        </form>
+                        <livewire:admin.user-search-bar role="admin" />
                     </div>
                     <div class="card-action">
                         <span><a href="{{ route('admin.addNewUserPage') }}"
-                                class="btn btn-primary profile-button {{ $admins->count() == 0 ? 'bounce' : '' }}">+Add New
+                                class="btn btn-primary profile-button d-none d-lg-block {{ $admins->count() == 0 ? 'bounce' : '' }}">+Add
+                                New
                                 Admin</a></span>
                     </div>
                 </div>
@@ -35,9 +32,16 @@
                             <tbody>
                                 @foreach ($admins as $admin)
                                     <tr>
-                                        <td><img width="50px" height="50px"
-                                                src="{{ $admin->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}"
-                                                class="rounded" alt="">
+                                        <td>
+                                            @if ($admin->image)
+                                                <img width="50px" height="50px"
+                                                    src="{{ asset('storage/' . $admin->image) }}" class="rounded"
+                                                    alt="">
+                                            @else
+                                                <img width="50px" height="50px"
+                                                    src="{{ $admin->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}"
+                                                    class="rounded" alt="">
+                                            @endif
                                         </td>
                                         <td><a href="{{ route('admin.profile', $admin->id) }}"
                                                 class="text-primary">{{ $admin->name }}</a></td>
@@ -47,10 +51,10 @@
                                         <td>{{ $admin->created_at->format('j-F-Y') }}</td>
                                         <td>
                                             <div class="">
-                                                <a href="{{ route('admin.editCategory', $admin->id) }}"
-                                                    class="btn btn-warning"><i class="fa-solid fa-pen me-2"></i> Edit</a>
-                                                <a href="{{ route('admin.deleteCategory', $admin->id) }}"
-                                                    class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                @if ($admin->id != Auth::user()->id)
+                                                    <a href="{{ route('admin.deleteCategory', $admin->id) }}"
+                                                        class="btn btn-danger"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

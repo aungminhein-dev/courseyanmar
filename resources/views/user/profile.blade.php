@@ -3,9 +3,15 @@
     <div class="container rounded mt-5 mb-5">
         <div class="row border shadow">
             <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    @if ($userDetail->image)
+                        <img src="{{asset('storage/'.$userDetail->image)}}" style="width:150px;" alt="" class="rounded-circle mt-5">
+                    @else
+                        <img class="rounded-circle mt-5"
                         width="150px"
-                        src="{{ $userDetail->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}"><span
+                        src="{{ $userDetail->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}">
+                    @endif
+                    <span
                         class="font-weight-bold text-muted">{{ $userDetail->name }}</span><span
                         class="text-black-50">{{ $userDetail->email }}</span>
                     <div class="mt-5 text-center">

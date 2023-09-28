@@ -7,14 +7,12 @@
 
                     User List
                     <div class="card-action">
-                        <form class="search-bar">
-                            <input type="text" class="form-control" placeholder="Enter keywords">
-                            <a href="javascript:void();"><i class="icon-magnifier"></i></a>
-                        </form>
+                        <livewire:admin.user-search-bar role="user" />
                     </div>
                     <div class="card-action">
                         <span><a href="{{ route('admin.createCategoryPage') }}"
-                                class="btn btn-primary profile-button {{ $users->count() == 0 ? 'bounce' : '' }}">+Add New
+                                class="btn btn-primary profile-button d-none d-lg-block {{ $users->count() == 0 ? 'bounce' : '' }}">+Add
+                                New
                                 Uer</a></span>
                     </div>
                 </div>
@@ -34,11 +32,19 @@
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
-                                        <td><img width="50px" height="50px"
-                                                src="{{ $user->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.jpg') }}"
-                                                class="rounded" alt="">
+                                        <td>
+                                            @if ($user->image)
+                                                <img width="50px" height="50px"
+                                                    src="{{ asset('storage/' . $user->image) }}" class="rounded"
+                                                    alt="">
+                                            @else
+                                                <img width="50px" height="50px"
+                                                    src="{{ $user->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}"
+                                                    class="rounded" alt="">
+                                            @endif
                                         </td>
-                                        <td><a href="{{ route('admin.profile',$user->id) }}" class="text-primary">{{ $user->name }}</a></td>
+                                        <td><a href="{{ route('admin.profile', $user->id) }}"
+                                                class="text-primary">{{ $user->name }}</a></td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
                                         <td>{{ $user->gender }}</td>

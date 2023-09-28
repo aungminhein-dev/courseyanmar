@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        @livewireStyles
     <style>
         .spin {
             animation: spin 1s infinite linear;
@@ -78,7 +79,7 @@
 <body class="{{ Auth::user()->background == '' ? 'bg-theme bg-theme2' : Auth::user()->background }}"
     style="position:relative;">
     {{-- loader --}}
-    {{-- <div class="loader bg-black" id="myLoader">
+    <div class="loader bg-black" id="myLoader">
         <div class="d-flex justify-content-center align-items-center" style=" height: 100vh;">
             <div class="text ">
                 <h5 class="text-center">
@@ -87,7 +88,7 @@
                 <h5 class="text-white">Loading</h5>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- Start wrapper-->
     <div id="wrapper">
 
@@ -156,6 +157,7 @@
     <script src="{{ asset('admin/assets/js/additional.js') }}"></script>
     <script src="{{ asset('admin/assets/js/video-gallery.js') }}"></script>
     @yield('myScript')
+    @livewireScripts
 </body>
 <script>
     $(document).ready(function() {

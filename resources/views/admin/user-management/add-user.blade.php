@@ -2,7 +2,7 @@
 @section('content')
     <div class="container rounded bg-light mt-5 mb-5">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-8">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="text-center">Add New User</h4>
@@ -47,8 +47,8 @@
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-6"><label class="labels">Photo</label><input type="file"
-                                    class="form-control" name="image" placeholder="Photo"></div>
+                            <div class="col-md-6"><label class="labels">Photo</label><input class="form-control"
+                                    type="file" id="formFile" onchange="preview()"name="image"></div>
                             <div class="col-md-6">
                                 <label class="labels">Gender</label>
                                 <div class="form-group">
@@ -78,6 +78,17 @@
                     </form>
                 </div>
             </div>
+            <div class="col-md-4 mt-5">
+                <img src="" class="w-100 d-block mx-auto img-fluid" onchange="preview()" id="my-image">
+            </div>
         </div>
     </div>
+@endsection
+@section('myScript')
+    <script>
+        let frame = document.getElementById('my-image')
+        function preview() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 @endsection

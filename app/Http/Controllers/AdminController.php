@@ -110,6 +110,7 @@ class AdminController extends Controller
     {
         $userDetail = User::where('id', $id)->first();
         $userDetail->load('enrolledCourses');
+        // dd($userDetail->toArray());
         return view('admin.account.profile',compact('userDetail'));
     }
 

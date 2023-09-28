@@ -71,7 +71,6 @@ Route::middleware(['admin_auth','auth'])->group(function(){
             Route::get('{id}/lesson/create',[LessonController::class,'createLessonPage'])->name('admin.createLessonPage');
             Route::post('lesson/create',[LessonController::class,'createLesson'])->name('admin.createLesson');
             Route::get('lesson/delete/{id}',[LessonController::class,'deleteLesson'])->name('admin.deleteLesson');
-
         });
 
             // profile

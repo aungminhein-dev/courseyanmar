@@ -13,12 +13,17 @@
                     aria-label="search" aria-describedby="search" />
                 <div class="col-md-12" style="position: relative; z-index:9999">
                     <div class="list-group w-100">
-                        @if (sizeof($courses) > 0)
-                            @foreach ($courses as $course)
-                                <a href="{{route('user.courseDetails',$course->id)}}" class="list-item list-group-item-action border-1 bg-white p-3">{{$course->name}}</a>
-                            @endforeach
+                        @if (strlen($search) > 1)
+                            @if ($courses->count() != 0)
+                                @foreach ($courses as $course)
+                                    <a href="{{ route('user.courseDetails', $course->id) }}"
+                                        class="list-item list-group-item-action border-1 bg-white p-3 ">{{ $course->name }}</a>
+                                @endforeach
+                            @else
+                                <span href="" class="list-item list-group-item-action border-1 bg-white p-3">No
+                                    Results</span>4
+                            @endif
                         @endif
-
                     </div>
                 </div>
 

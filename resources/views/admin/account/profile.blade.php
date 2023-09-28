@@ -3,10 +3,15 @@
     <div class="container rounded bg-light mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                        width="150px"
-                        src="{{ $userDetail->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}"><span
-                        class="font-weight-bold">{{ $userDetail->name }}</span><span
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    @if ($userDetail->image)
+                        <img src="{{ asset('storage/' . $userDetail->image) }}" style="width:150px;" alt=""
+                            class="rounded-circle mt-5">
+                    @else
+                        <img class="rounded-circle mt-5" width="150px"
+                            src="{{ $userDetail->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}">
+                    @endif
+                    <span class="font-weight-bold">{{ $userDetail->name }}</span><span
                         class="text-black-50">{{ $userDetail->email }}</span>
                     <div class="mt-5 text-center">
                         <a href="{{ route('admin.changePasswordPage') }}"
@@ -45,8 +50,8 @@
                                     value="{{ $userDetail->phone }}" @disabled($userDetail->id != Auth::user()->id)>
                             </div>
                             <div class="col-md-12"><label class="labels">Email</label><input type="email"
-                                    class="form-control" name="email" placeholder="Email" value="{{ $userDetail->email }}"
-                                    @disabled($userDetail->id != Auth::user()->id)>
+                                    class="form-control" name="email" placeholder="Email"
+                                    value="{{ $userDetail->email }}" @disabled($userDetail->id != Auth::user()->id)>
                             </div>
                             <div class="col-md-12"><label class="labels">Address</label><input type="text"
                                     class="form-control" name="address" placeholder="Address"
@@ -101,9 +106,9 @@
                     @if ($userDetail->role == 'user')
 
                         @if ($userDetail->enrolledCourses)
-                        <h4 class="text-white">
-                            Enrolled Courses
-                        </h4>
+                            <h4 class="text-white">
+                                Enrolled Courses
+                            </h4>
                             @foreach ($userDetail->enrolledCourses as $c)
                                 <div class="col-md-4 mt-2">
                                     <img src="{{ asset('storage/' . $c->image) }}" alt=""
@@ -111,7 +116,7 @@
                                 </div>
                             @endforeach
                         @else
-                        <h4 class="text-white">No Enrolled Courses</h4>
+                            <h4 class="text-white">No Enrolled Courses</h4>
                         @endif
 
                     @endif
