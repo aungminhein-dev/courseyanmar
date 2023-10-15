@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        @livewireStyles
+    @livewireStyles
     <style>
         .spin {
             animation: spin 1s infinite linear;
@@ -79,7 +79,7 @@
 <body class="{{ Auth::user()->background == '' ? 'bg-theme bg-theme2' : Auth::user()->background }}"
     style="position:relative;">
     {{-- loader --}}
-    <div class="loader bg-black" id="myLoader">
+    {{-- <div class="loader bg-black" id="myLoader">
         <div class="d-flex justify-content-center align-items-center" style=" height: 100vh;">
             <div class="text ">
                 <h5 class="text-center">
@@ -88,10 +88,9 @@
                 <h5 class="text-white">Loading</h5>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Start wrapper-->
     <div id="wrapper">
-
         {{-- sidebar component --}}
         <x-admin.sidebar />
 
@@ -102,16 +101,12 @@
 
         <div class="content-wrapper">
             <div class="container-fluid" style="height: 100vh;">
-
-
                 @yield('content')
-
                 <!--start overlay-->
                 <div class="overlay toggle-menu"></div>
                 <!--end overlay-->
             </div>
             <!-- End container-fluid-->
-
         </div>
         <!--End content-wrapper-->
         <!--Start Back To Top Button-->
@@ -124,7 +119,6 @@
 
     </div>
     <!--End wrapper-->
-
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
         integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
@@ -158,13 +152,14 @@
     <script src="{{ asset('admin/assets/js/video-gallery.js') }}"></script>
     @yield('myScript')
     @livewireScripts
-</body>
-<script>
-    $(document).ready(function() {
-        $(window).on('load', function() {
-            $('#myLoader').hide();
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
-    });
-</script>
+    </script>
+</body>
+
 
 </html>

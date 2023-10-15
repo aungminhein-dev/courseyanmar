@@ -35,6 +35,7 @@ class User extends Authenticatable
         'gender',
         'password',
         'background',
+        'profile_photo_path'
     ];
 
     /**
@@ -52,7 +53,8 @@ class User extends Authenticatable
     public function enrolledCourses()
     {
         return $this->belongsToMany(Course::class, 'enrollments', 'user_id' ,'course_id')
-        ->withPivot('status');
+        ->withPivot('status','id');
+
     }
 
     public function enrollments()

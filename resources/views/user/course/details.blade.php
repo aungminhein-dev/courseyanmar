@@ -288,7 +288,7 @@
                                         href="#">{{ $course->created_at->format('j-F-Y') }}</a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <i class="fa fa-tags text-muted"></i> <a
+                                    <i class="fa fa-tags text-muted"></i> <a class="text-uppercase"
                                         href="#">{{ $course->category->name }}</a>
                                 </li>
                                 <li class="list-inline-item">
@@ -296,6 +296,10 @@
                                 </li>
                                 <li class="list-inline-item">
                                     <i class="fa fa-dollar text-muted"></i> <a href="#">{{ $course->price }} Kyats</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <i class="fa-solid fa-photo-film text-muted"></i> <a
+                                        href="">{{ $course->lessons_count }}</a>
                                 </li>
                             </ul>
                             <p class="text-muted">
@@ -315,10 +319,20 @@
                                 <ul class="comment-reply list-unstyled">
                                     @foreach ($comments as $comment)
                                         <li class="row clearfix">
-                                            <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail"
-                                                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                                    alt="Awesome Image">
-                                            </div>
+                                            @if (Auth::user()->image)
+                                                <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail"
+                                                        src="{{ asset('storage/' . Auth::user()->image) }}"
+                                                        alt="image" /></div>
+                                            @elseif (Auth::user()->profile_photo_path)
+                                                <div class="icon-box col-md-2 col-4"> <img class="img-fluid img-thumbnail"
+                                                        src="{{ Auth::user()->profile_photo_path }}" alt="Google Avatar" />
+                                                </div>
+                                            @else
+                                                <div class="icon-box col-md-2 col-4"><img class="img-fluid img-thumbnail"
+                                                        src="{{ asset('user/assets/images/faces/face1.jpg') }}"
+                                                        alt="image" /></div>
+                                            @endif
+
                                             <div class="text-box col-md-10 col-8 p-l-0 p-r0">
                                                 <h5 class="m-b-0">{{ $comment->user->name }}</h5>
                                                 <p>{{ $comment->description }}</p>

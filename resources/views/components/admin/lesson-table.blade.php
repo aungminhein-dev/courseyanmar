@@ -1,14 +1,6 @@
 <div>
     <div class="card">
         <div class="card-header">{{ $course->name }}
-            <div class="card-action">
-
-                <form class="search-bar d-flex" role="search" method="get">
-                    <input class="form-control me-2 my-input" name="searchKey" type="search" placeholder="Search"
-                        aria-label="Search">
-                    <button class="btn btn-outline-success btn-sm" type="submit">Search</button>
-                </form>
-            </div>
         </div>
         @if ($lessons->count() != 0)
             <div class="table-responsive">

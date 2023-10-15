@@ -19,7 +19,7 @@ class CourseController extends Controller
         if ($request->status == 'latest') {
             $coursesQuery->orderBy('created_at', 'desc');
         } elseif($request->status == 'trending') {
-            $coursesQuery->orderBy('buyer_count','desc');
+            $coursesQuery->orderBy('view_count','desc');
         } else{
             $coursesQuery->orderBy('created_at', 'asc');
         }
@@ -31,7 +31,7 @@ class CourseController extends Controller
     // create course
     public function createCoursePage()
     {
-        $categories = Category::orderBy('created_at')->get();
+        $categories = Category::get();
         return view('admin.course.create-course',compact('categories'));
     }
 

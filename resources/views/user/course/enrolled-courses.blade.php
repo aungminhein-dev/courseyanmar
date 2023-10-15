@@ -54,9 +54,9 @@
                                             @break
 
                                             @case(2)
-                                                <h5 class="text-danger postcard__status">
+                                                <a href="{{ route('user.denyReason',$c->pivot->id) }}" class="text-danger postcard__status">
                                                     Denied!
-                                                </h5>
+                                                </a>
                                             @break
 
                                             @default

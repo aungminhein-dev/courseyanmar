@@ -24,8 +24,8 @@ class AdminController extends Controller
         $categoryCount = Category::count();
         $courseCount = Course::count();
         $lessonCount = Lesson::count();
-        $enrollmentCount = Enrollment::where('status',1)->count();
-        $userCount = User::where('role','user')->count();
+        $enrollmentCount = Enrollment::where('status', 1)->count();
+        $userCount = User::where('role', 'user')->count();
 
         // Date variables
         $todayDate = Carbon::now()->format('d-m-Y');
@@ -40,19 +40,19 @@ class AdminController extends Controller
         $lastMonthUserCount = User::where('role', 'user')->whereBetween('created_at', [$startOfMonth, $endOfMonth])->count();
 
         // This month statistics
-        $thisMonthCourseCount = Course::whereMonth('created_at', $thisMonth)->whereYear('created_at',$thisYear)->count();
-        $thisMonthEnrollmentCount = Enrollment::where('status',1)->whereMonth('created_at', $thisMonth)->whereYear('created_at',$thisYear)->count();
-        $thisMonthUserCount = User::where('role', 'user')->whereMonth('created_at', $thisMonth)->whereYear('created_at',$thisYear)->count();
+        $thisMonthCourseCount = Course::whereMonth('created_at', $thisMonth)->whereYear('created_at', $thisYear)->count();
+        $thisMonthEnrollmentCount = Enrollment::where('status', 1)->whereMonth('created_at', $thisMonth)->whereYear('created_at', $thisYear)->count();
+        $thisMonthUserCount = User::where('role', 'user')->whereMonth('created_at', $thisMonth)->whereYear('created_at', $thisYear)->count();
 
         //  user counts for the current year
         $userCountsCurrentYear = $this->getUserCountsByYear($thisYear);
-        $userCountCurrentYear = User::whereYear('created_at',$thisYear)->where('role','user')->count();
+        $userCountCurrentYear = User::whereYear('created_at', $thisYear)->where('role', 'user')->count();
         //  user counts for the last year
-        $userCountsLastYear = $this->getUserCountsByYear($thisYear-1);
-        $userCountLastYear = User::whereYear('created_at',$thisYear-1)->where('role','user')->count();
+        $userCountsLastYear = $this->getUserCountsByYear($thisYear - 1);
+        $userCountLastYear = User::whereYear('created_at', $thisYear - 1)->where('role', 'user')->count();
 
-        $thisYearEnrollment = Enrollment::where('status',1)->whereYear('created_at',$thisYear)->count();
-        $lastYearEnrollment = Enrollment::where('status',1)->whereYear('created_at',$thisYear-1)->count();
+        $thisYearEnrollment = Enrollment::where('status', 1)->whereYear('created_at', $thisYear)->count();
+        $lastYearEnrollment = Enrollment::where('status', 1)->whereYear('created_at', $thisYear - 1)->count();
 
 
         $monthsThisYear = [
@@ -75,14 +75,14 @@ class AdminController extends Controller
         foreach ($userCountsLastYear as $u) {
             $monthsLastYear[$u->month] += $u->count; //  counts for both years
         }
-        $enrollments = Enrollment::with('course')->where('status',1)->get();
+        $enrollments = Enrollment::with('course')->where('status', 1)->get();
         $totalPrice = $enrollments->sum(function ($enrollment) {
             return $enrollment->course->price;
         });
         $xData = array_keys($monthsThisYear); // Month abbreviations use php functions*** to note for other projects
         $yDataThisYear = array_values($monthsThisYear); // User counts
         $yDataLastYear = array_values($monthsLastYear);
-        if($request->ajax()){
+        if ($request->ajax()) {
             return response()->json([
                 'xData' => $xData,
                 'yDataThisYear' => $yDataThisYear,
@@ -90,15 +90,29 @@ class AdminController extends Controller
                 'thisYearEnrollment' => $thisYearEnrollment,
                 'lastYearEnrollment' => $lastYearEnrollment,
                 'thisYear' => $thisYear,
-                'lastYear' => $thisYear-1
+                'lastYear' => $thisYear - 1
             ]);
         }
+        $recentOrders = Enrollment::with('course','user')->where('order_status','new')->paginate(7);
         return view('admin.dashboard', compact(
-            'categoryCount', 'courseCount', 'lessonCount', 'thisMonthCourseCount',
-            'userCount', 'lastMonthCourseCount',
-            'lastMonthEnrollmentCount', 'thisMonthEnrollmentCount', 'enrollmentCount','userCount',
-            'userCountCurrentYear','userCountLastYear','thisMonthUserCount','lastMonthUserCount','thisYear','thisYearEnrollment',
-            'lastYearEnrollment'
+            'categoryCount',
+            'courseCount',
+            'lessonCount',
+            'thisMonthCourseCount',
+            'userCount',
+            'lastMonthCourseCount',
+            'lastMonthEnrollmentCount',
+            'thisMonthEnrollmentCount',
+            'enrollmentCount',
+            'userCount',
+            'userCountCurrentYear',
+            'userCountLastYear',
+            'thisMonthUserCount',
+            'lastMonthUserCount',
+            'thisYear',
+            'thisYearEnrollment',
+            'lastYearEnrollment',
+            'recentOrders'
         ));
     }
 
@@ -108,10 +122,11 @@ class AdminController extends Controller
     // profile
     public function profile($id)
     {
-        $userDetail = User::where('id', $id)->first();
-        $userDetail->load('enrolledCourses');
-        // dd($userDetail->toArray());
-        return view('admin.account.profile',compact('userDetail'));
+        $userDetail = User::with('enrolledCourses')->find($id);
+        $userEnrolledCourses = $userDetail->enrolledCourses->filter(function ($course) {
+            return $course->pivot->status === 1;
+        });
+        return view('admin.account.profile', compact('userDetail','userEnrolledCourses'));
     }
 
     // add new admin page
@@ -123,9 +138,9 @@ class AdminController extends Controller
     // add new admin
     public function addNewUser(Request $request)
     {
-        Validator::make($request->all(),[
+        Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'email',
+            'email' => 'email|unique:users,email',
             'phone' => 'required',
             'address' => 'required',
             'gender' => 'required',
@@ -133,27 +148,27 @@ class AdminController extends Controller
             'password' => 'required'
         ])->validate();
         $data = $this->requestUserData($request);
-        if($request->hasFile('image')){
-            $image = uniqid().$request->image->getClientOriginalName();
+        if ($request->hasFile('image')) {
+            $image = uniqid() . $request->image->getClientOriginalName();
             $data['image'] = $image;
-            $request->file('image')->storeAs('public',$image);
+            $request->file('image')->storeAs('public', $image);
         }
         User::create($data);
-        toastr()->success('A new admin has been created!','Action Completed!');
+        toastr()->success('A new admin has been created!', 'Action Completed!');
         return back();
     }
     // deleteUser
     public function deleteUser($id)
     {
-        User::where('id',$id)->delete();
-        toastr()->success('A user is deleted!','Action Complete');
+        User::where('id', $id)->delete();
+        toastr()->success('A user is deleted!', 'Action Complete');
         return back();
     }
 
     // upgrade profile
     public function upgrade(Request $request)
     {
-        Validator::make($request->all(),[
+        Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'email',
             'phone' => 'required',
@@ -161,13 +176,13 @@ class AdminController extends Controller
             'gender' => 'required',
         ])->validate();
         $data = $this->requestUserData($request);
-        if($request->hasFile('image')){
-            $image = uniqid().$request->image->getClientOriginalName();
+        if ($request->hasFile('image')) {
+            $image = uniqid() . $request->image->getClientOriginalName();
             $data['image'] = $image;
-            $request->file('image')->storeAs('public',$image);
+            $request->file('image')->storeAs('public', $image);
         }
-        User::where('id',$request->userId)->update($data);
-        toastr()->success('Your profile has been updated','Action Complete!');
+        User::where('id', $request->userId)->update($data);
+        toastr()->success('Your profile has been updated', 'Action Complete!');
         return back();
     }
     // change password page
@@ -179,13 +194,16 @@ class AdminController extends Controller
     // change password
     public function changePassword(Request $request)
     {
-        $admin = User::where('id',Auth::user()->id)->first();
-        if(Hash::check($request->oldPassword, $admin->password) &&  ($request->newPassword == $request->confirmPassword)){
-           User::where('id',Auth::user()->id)->update([
-            'password' => Hash::make($request->newPassword)
-           ]);
+        $admin = User::where('id', Auth::user()->id)->first();
+        if (Hash::check($request->oldPassword, $admin->password) &&  ($request->newPassword == $request->confirmPassword)) {
+            User::where('id', Auth::user()->id)->update([
+                'password' => Hash::make($request->newPassword)
+            ]);
+            toastr()->success('Your password has changed', 'Action Completed!');
+
+        }else{
+            toastr()->error('Something went wrong!');
         }
-        toastr()->success('Your password has changed','Action Completed!');
         return back();
     }
 
@@ -204,8 +222,8 @@ class AdminController extends Controller
     // change theme
     public function changeTheme(Request $request)
     {
-        User::where('id',Auth::user()->id)->update([
-            'background'=> $request->background
+        User::where('id', Auth::user()->id)->update([
+            'background' => $request->background
         ]);
     }
 
@@ -213,22 +231,22 @@ class AdminController extends Controller
     // admin list
     public function adminList()
     {
-        $admins = User::where('role','admin')
-        ->when(request('searchKey'),function($query){
-            $query->where('name','like','%'.request('searchKey').'%');
-        })
-        ->paginate(10);
-        return view('admin.user-management.admin-list',compact('admins'));
+        $admins = User::where('role', 'admin')
+            ->when(request('searchKey'), function ($query) {
+                $query->where('name', 'like', '%' . request('searchKey') . '%');
+            })
+            ->paginate(10);
+        return view('admin.user-management.admin-list', compact('admins'));
     }
     // user list
     public function userList()
     {
-        $users = User::where('role','user')
-        ->when(request('searchKey'),function($query){
-            $query->where('name','like','%'.request('searchKey').'%');
-        })
-        ->paginate(10);
-        return view('admin.user-management.user-list',compact('users'));
+        $users = User::where('role', 'user')
+            ->when(request('searchKey'), function ($query) {
+                $query->where('name', 'like', '%' . request('searchKey') . '%');
+            })
+            ->paginate(10);
+        return view('admin.user-management.user-list', compact('users'));
     }
 
     private function requestUserData($request)
@@ -247,7 +265,7 @@ class AdminController extends Controller
     {
         return DB::table('users')
             ->select(DB::raw('DATE_FORMAT(created_at, "%b") as month'), DB::raw('COUNT(*) as count'))
-            ->where('role','user')
+            ->where('role', 'user')
             ->whereYear('created_at', $year)
             ->groupBy(DB::raw('DATE_FORMAT(created_at, "%m")'))
             ->orderBy(DB::raw('DATE_FORMAT(created_at, "%m")'), 'asc')

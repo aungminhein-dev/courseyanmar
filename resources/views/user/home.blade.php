@@ -1,21 +1,34 @@
 @extends('user.layouts.app')
 @section('content')
     <style>
-        .my-bg {
-            backdrop-filter: blur(5px) !important;
-            background-size: cover !important;
-            background-position: center !important;
-            height: 150px !important;
-        }
-        .blur-background{
-            background-size: cover; /* Ensure the background image covers the element */
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
-            height: 100%;
+        .background-filter::after {
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: brightness(0.7) blur(2px);
+            filter: brightness(0.7) blur(2px);
+            content: "";
+            display: block;
+            position: absolute;
             width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
         }
 
+        .background-filter {
+            position: relative;
+        }
+
+        .background {
+            background-position: center;
+            background-size: cover;
+        }
+        .u-non-blurred {
+            position: relative;
+            z-index: 1;
+        }
     </style>
     <!-- partial -->
+
     <div class="container-fluid page-body-wrapper">
         <div class="main-panel">
             <div class="content-wrapper pb-0">
@@ -32,12 +45,17 @@
                             @if ($course->pivot->status == 1)
                                 <div class="col-xl-4 grid-margin">
                                     <div class="card card-stat stretch-card mb-3">
-                                        <div class="card-body my-bg "
-                                            style=" background: url('{{ asset('storage/' . $course->image) }}');">
-                                            <div class="d-flex justify-content-between p-2 blur-background">
-                                                <div class="text-white">
+                                        <div class="card-body background background-filter" style="background-image: url({{ asset('storage/' . $course->image) }}) !important;">
+                                            <div class="d-flex justify-content-between ">
+                                                <div class="text-white u-non-blurred">
                                                     <h3 class="font-weight-bold mb-0">{{ $course->name }}</h3>
-                                                    <h6>{{ $course->lessons_count }} lessons</h6>
+                                                    <h6 class="mb-0">
+                                                        @if ($course->lessons_count == 0)
+                                                            <span class="text-warning">Coming Soon</span>
+                                                        @else
+                                                            <i class="fa-solid fa-photo-film"></i> {{ $course->lessons_count }}
+                                                        @endif
+                                                    </h6>
                                                     <a href="{{ route('user.play', $course->id) }}"
                                                         class="text-success">Watch</a>
                                                 </div>

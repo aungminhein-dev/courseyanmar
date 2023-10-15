@@ -9,10 +9,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::orderBy('created_at')
-        ->get();
-        // dd($categories->toArray());
-        return view('admin.category.index',compact('categories'));
+        $categories = Category::withCount('courses')->get();
+        return view('admin.category.index', compact('categories'));
     }
 
     public function createPage()
@@ -22,49 +20,62 @@ class CategoryController extends Controller
 
     public function createCategory(Request $request)
     {
-        $data = $this->requestData($request);
-        if($request->hasFile('image')){
-            $imageName = uniqid().$request->file('image')->getClientOriginalName();
-            $request->file('image')->storeAs('public',$imageName);
-            $data['image'] = $imageName;
+        $this->validateCategoryRequest($request);
+        $data = $this->getRequestData($request);
+        if ($request->hasFile('image')) {
+            $data['image'] = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public', $data['image']);
         }
+
         Category::create($data);
-        toastr()->success('A new category has been created!','Successful!');
-        return back();
+        toastr()->success('A new category has been created!', 'Successful!');
+        return redirect()->route('admin.category');
     }
 
-    // edit
     public function editCategory($id)
     {
-        $chosenItem = Category::where('id',$id)->first();
-        return view('admin.category.edit',compact('chosenItem'));
+        $chosenItem = Category::findOrFail($id);
+        return view('admin.category.edit', compact('chosenItem'));
     }
 
     public function updateCategory(Request $request)
     {
-        $data = $this->requestData($request);
-        if($request->hasFile('image')){
-            $imageName = uniqid().$request->file('image')->getClientOriginalName();
-            $request->file('image')->storeAs('public',$imageName);
-            $data['image'] = $imageName;
+        $this->validateCategoryRequest($request);
+
+        $data = $this->getRequestData($request);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public', $data['image']);
         }
-        Category::where('id',$request->id)->update($data);
-        toastr()->success('An existing category has been updated!','Action completed!');
+
+        Category::where('id', $request->id)->update($data);
+
+        toastr()->success('An existing category has been updated!', 'Action completed!');
         return redirect()->route('admin.category');
     }
 
-    // delete
     public function delete($id)
     {
-        Category::where('id',$id)->delete();
-        toastr()->danger('A category has been removed','Action Complete!');
+        Category::findOrFail($id)->delete();
+        toastr()->success('A category has been removed', 'Action Complete!');
         return back();
     }
-    private function requestData($request)
+
+    private function validateCategoryRequest(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:categories,name,'.$request->id,
+            'description' => 'required',
+        ]);
+    }
+
+    private function getRequestData(Request $request)
     {
         return [
             'name' => $request->name,
-            'description'=> $request->description
+            'description' => $request->description,
         ];
     }
 }
+

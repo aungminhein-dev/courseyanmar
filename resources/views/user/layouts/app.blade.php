@@ -11,12 +11,7 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('user/assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('user/assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('user/assets/vendors/css/vendor.bundle.base.css') }}">
     <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="{{ asset('user/assets/vendors/jquery-bar-rating/css-stars.css') }}" />
-    <link rel="stylesheet" href="{{ asset('user/assets/vendors/font-awesome/css/font-awesome.min.css') }}" />
-    <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
@@ -106,12 +101,12 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('user/assets/vendors/js/vendor.bundle.base.js') }}"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-    <script src="{{ asset('user/assets/vendors/flot/jquery.flot.stack.js') }}"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
     </script>
@@ -121,7 +116,6 @@
     <script src="{{ asset('user/assets/js/misc.js') }}"></script>
     <script src="{{ asset('user/assets/js/settings.js') }}"></script>
     <script src="{{ asset('user/assets/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('user/assets/js/video-gallery.js') }}"></script>
 
     <!-- endinject -->
     <!-- Custom js for this page -->

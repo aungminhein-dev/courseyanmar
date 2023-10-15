@@ -109,7 +109,8 @@
                             <h4 class="text-white">
                                 Enrolled Courses
                             </h4>
-                            @foreach ($userDetail->enrolledCourses as $c)
+
+                            @foreach ($userEnrolledCourses as $c)
                                 <div class="col-md-4 mt-2">
                                     <img src="{{ asset('storage/' . $c->image) }}" alt=""
                                         class="img-fluid mx-auto d-block rounded" width="100px">

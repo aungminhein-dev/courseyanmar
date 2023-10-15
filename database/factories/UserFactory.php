@@ -38,7 +38,6 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'current_team_id' => null,
             'profile_photo_path' => null,
-            'created_at' => $this->faker->dateTimeBetween($year[0] . '-01-01', $year[1] . '-12-31'),
             'updated_at' => now(),
         ];
     }

@@ -33,7 +33,7 @@
 
         <div class="row">
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
-            <img src="{{asset('user/assets/img/abo')}}ut.jpg" class="img-fluid" alt="">
+            <img src="{{asset('guest/assets/img/abo')}}ut.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
             <h3>This website meant to be for the people with office,school,household or other stuffs and want to upgrade their skills without giving too
@@ -43,7 +43,7 @@
               The lessons are very straight forward and short to the point and also give a good coverage of sholuds.
             </p>
             <ul>
-              <li><i class="bi bi-check-circle"></i>Easy to pay for myanmar users. We accept KBZ Pay,Wave Money etc.</li>
+              <li><i class="bi bi-check-circle"></i>Easy to pay for myanmar guests. We accept KBZ Pay,Wave Money etc.</li>
               <li><i class="bi bi-check-circle"></i>Very good and talented instructors that would help your learning process faster.</li>
               <li><i class="bi bi-check-circle"></i>High quality videos.</li>
             </ul>
@@ -73,7 +73,7 @@
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                  <img src="{{asset('user/assets/img/testimonials/testimonials-1.jpg')}}" class="testimonial-img" alt="">
+                  <img src="{{asset('guest/assets/img/testimonials/testimonials-1.jpg')}}" class="testimonial-img" alt="">
                   <h3>Saul Goodman</h3>
                   <h4>Ceo &amp; Founder</h4>
                   <p>
@@ -88,7 +88,7 @@
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                  <img src="{{asset('user/assets/img/testimonials/testimonials-2.jpg')}}" class="testimonial-img" alt="">
+                  <img src="{{asset('guest/assets/img/testimonials/testimonials-2.jpg')}}" class="testimonial-img" alt="">
                   <h3>Sara Wilsson</h3>
                   <h4>Designer</h4>
                   <p>
@@ -103,7 +103,7 @@
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                  <img src="{{asset('user/assets/img/testimonials/testimonials-3.jpg')}}" class="testimonial-img" alt="">
+                  <img src="{{asset('guest/assets/img/testimonials/testimonials-3.jpg')}}" class="testimonial-img" alt="">
                   <h3>Jena Karlis</h3>
                   <h4>Store Owner</h4>
                   <p>
@@ -118,7 +118,7 @@
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                  <img src="{{asset('user/assets/img/testimonials/testimonials-4.jpg')}}" class="testimonial-img" alt="">
+                  <img src="{{asset('guest/assets/img/testimonials/testimonials-4.jpg')}}" class="testimonial-img" alt="">
                   <h3>Matt Brandon</h3>
                   <h4>Freelancer</h4>
                   <p>
@@ -133,7 +133,7 @@
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                  <img src="{{asset('user/assets/img/testimonials/testimonials-5.jpg')}}" class="testimonial-img" alt="">
+                  <img src="{{asset('guest/assets/img/testimonials/testimonials-5.jpg')}}" class="testimonial-img" alt="">
                   <h3>John Larson</h3>
                   <h4>Entrepreneur</h4>
                   <p>

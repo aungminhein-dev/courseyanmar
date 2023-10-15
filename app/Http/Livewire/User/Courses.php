@@ -13,11 +13,10 @@ class Courses extends Component
     public $categoryId;
     public $categories;
     public $enrolledCourses;
-    public $courses;
 
-    public function sortData(Category $category)
+    public function sortData($id)
     {
-        $this->categoryId = $category->id;
+        $this->categoryId = $id;
     }
 
     public function render()
@@ -31,8 +30,8 @@ class Courses extends Component
             $coursesQuery->where('category_id', $this->categoryId);
         }
 
-        $this->courses = $coursesQuery->with('category')->get();
+        $courses = $coursesQuery->with('category')->paginate(10);
         $this->enrolledCourses = $user->enrolledCourses;
-        return view('livewire.user.courses'); // Use $this->enrolledCourses
+        return view('livewire.user.courses',compact('courses')); // Use $this->enrolledCourses
     }
 }

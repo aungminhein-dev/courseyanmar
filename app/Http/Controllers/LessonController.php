@@ -35,6 +35,9 @@ class LessonController extends Controller
         $this->validateData($request);
         $data = $this->getLessonData($request);
         if($request->hasFile('media')){
+            $request->validate([
+                'media' => 'required|mimes:mp4', // Corrected the file extensions
+            ]);
             $fileName = uniqid().$request->file('media')->getClientOriginalName();
             $request->file('media')->storeAs('public/lessons',$fileName);
             $data['media'] = $fileName;
@@ -58,7 +61,9 @@ class LessonController extends Controller
         Validator::make($request->all(),[
             'title' => 'required',
             'description' => 'required',
-            'audienceType' => 'required'
+            'audienceType' => 'required',
+            'media'=> 'required'
+
         ])->validate();
     }
 

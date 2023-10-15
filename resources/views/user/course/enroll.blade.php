@@ -24,6 +24,9 @@
                             <h5 class="text-success"><span class="text-muted">Instructor : </span>{{ $course->instructor }}
                             </h5>
                             <h5 class="text-success"><span class="text-muted">Price : </span>{{ $course->price }}</h5>
+                            <h5 class="text-success"> <i class="fa-solid fa-photo-film text-muted"></i>
+                                {{ $course->lessons_count }}
+                            </h5>
                             <h5 class="text-success"><span class="text-muted">Views : </span>{{ $course->view_count }}</h5>
                             <h5 class="text-danger">KBZ - 09797957976 </h5>
                             <h5 class="text-danger">Wave Money - 09797957976</h5>
@@ -57,7 +60,10 @@
                                                 <i class="fa-solid fa-cross-circle"></i><strong>Looks like the enrollment
                                                     has
                                                     been
-                                                    rejected. <a href="">See the reason!</a></strong>
+                                                    rejected. <a
+                                                        href="{{ route('user.denyReason', $enrollment->pivot->id) }}">See
+                                                        the
+                                                        reason!</a></strong>
                                             </div>
                                         @endif
                                     @endif

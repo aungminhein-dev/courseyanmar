@@ -30,20 +30,20 @@
             <li class="{{ Request::is('admin_/order') ? 'active' : '' }}">
                 <a href=" {{ route('admin.orders') }}">
                     <i class="fa-sharp fa-solid fa-comment"></i><span>Order</span>
-                    <small class="badge float-right badge-light"id="orderCount"></small>
+                    @livewire('admin.order-count-badge')
                 </a>
             </li>
 
             <li class="sidebar-header">User Management</li>
             <li class="{{ Request::is('admin_/list') ? 'active' : '' }}">
-                <a href="{{ route('admin.list') }}" >
+                <a href="{{ route('admin.list') }}">
                     <i class="fa-solid fa-users"></i>
                     Admins
                 </a>
             </li>
 
             <li class="{{ Request::is('admin_/user-list') ? 'active' : '' }}">
-                <a href="{{ route('admin.user-list') }}" >
+                <a href="{{ route('admin.user-list') }}">
                     <i class="fa-solid fa-users"></i>
                     Users
                 </a>
@@ -57,12 +57,12 @@
             </li>
 
             <li class="{{ Request::is('admin_/account/change/password') ? 'active' : '' }}"><a
-                    href="{{ route('admin.changePasswordPage') }}" ><i class="fa-solid fa-lock"></i>
+                    href="{{ route('admin.changePasswordPage') }}"><i class="fa-solid fa-lock"></i>
                     <span>Change Password</span></a>
             </li>
 
             <li class="{{ Request::is('admin_/account/themes') ? 'active' : '' }}">
-                <a href="{{ route('admin.themes') }}" >
+                <a href="{{ route('admin.themes') }}">
                     <i class="fa-solid fa-mountain-sun"></i> <span>Themes</span>
                 </a>
             </li>
@@ -71,22 +71,3 @@
     </div>
     <!--End sidebar-wrapper-->
 </div>
-@section('myScript')
-    {{-- <script>
-        $(document).ready(function() {
-            let orderCount = $('#orderCount')
-            let orderStatus = $('#orderStatus')
-            setInterval(() => {
-                $.ajax({
-                    method: 'get',
-                    url: '/admin_/order/getStatusAndCount',
-                    success: function(data) {
-                        if (data > 0) {
-                            orderCount.html(data)
-                        }
-                    }
-                })
-            }, 1000);
-        })
-    </script> --}}
-@endsection

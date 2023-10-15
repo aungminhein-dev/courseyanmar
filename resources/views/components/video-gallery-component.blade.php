@@ -17,25 +17,14 @@
         </div>
         <div class="video-list mt-2" style="background-color:rgba(127, 123, 123, 0.127)">
             @foreach ($lessons as $lesson)
-                @if ($enrolledCourses->contains('id',$lesson->course_id))
                 <div class="vid bg-light">
                     <video src="{{ asset('storage/lessons/' . $lesson->media) }}"></video>
                     <h3 class="lesson-title text-muted">
                         {{ $lesson->title }} <span class="duration badge badge-success"></span>
                     </h3>
                     <input type="hidden" name="" value="{{ $lesson->description }}" class="desc-hidden">
-                    <span class="text-primary">bought</span>
                 </div>
-                @else
-                    <div class="vid bg-light">
-                    <video src="{{ asset('storage/lessons/' . $lesson->media) }}"></video>
-                    <h3 class="lesson-title text-muted">
-                        {{ $lesson->title }} <span class="duration badge badge-success"></span>
-                    </h3>
-                    <input type="hidden" name="" value="{{ $lesson->description }}" class="desc-hidden">
-                    <span class="text-primary">not bought</span>
-                </div>
-                @endif
+
             @endforeach
         </div>
     </div>

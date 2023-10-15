@@ -363,15 +363,15 @@
                     @if ($popularCourses->count() != 0)
                         <div class="card">
                             <div class="header">
-                                <h2>Popular Posts</h2>
+                                <h2>You May Also Like</h2>
                             </div>
                             <div class="body widget popular-post">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         @foreach ($popularCourses as $course)
                                             <div class="single_post">
-                                                <a class="h5" href="{{ route('user.courseDetails', $course->id) }}"
-                                                    class="m-b-0">{{ $course->name }}</a>
+                                                <a class="h5 m-b-0 text-success" href="{{ route('guest.courseDetails', $course->id) }}"
+                                                    >{{ $course->name }}</a>
                                                 <span class="text-muted">{{ $course->instructor }}</span>
                                                 <div class="img-post">
                                                     <img src="{{ asset('storage/' . $course->image) }}"
@@ -385,42 +385,7 @@
                             </div>
                         </div>
                     @endif
-                    <div class="card">
-                        <div class="header">
-                            <h2>Instagram Post</h2>
-                        </div>
-                        <div class="body widget">
-                            <ul class="list-unstyled instagram-plugin m-b-0">
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                                <li><a href="javascript:void(0);"><img
-                                            src="https://www.bootdey.com/image/100x100/87CEFA/000000"
-                                            alt="image description"></a></li>
-                            </ul>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 

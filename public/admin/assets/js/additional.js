@@ -1,9 +1,5 @@
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+
 $('.owl-carousel').owlCarousel({
     loop: false,
     margin: 10,

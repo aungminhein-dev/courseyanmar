@@ -6,12 +6,7 @@
                 <div class="card-header">
 
                    Category Table
-                    <div class="card-action">
-                        <form class="search-bar">
-                            <input type="text" class="form-control" placeholder="Enter keywords">
-                            <a href="javascript:void();"><i class="icon-magnifier"></i></a>
-                        </form>
-                    </div>
+                    @livewire('admin.category-search')
                     <div class="card-action">
                         <span><a href="{{ route('admin.createCategoryPage') }}" class="btn btn-light btn-block {{$categories->count() == 0 ? 'bounce' : ''}}">+Add Category</a></span>
                     </div>
@@ -36,7 +31,7 @@
                                             alt="product img">
                                     </td>
                                     <td>{{ Str::limit($category->description, 20, '...') }}</td>
-                                    <td>{{ $category->courses->count() }}</td>
+                                    <td>{{ $category->courses_count }}</td>
                                     <td>{{ $category->created_at->format('j-F-Y') }}</td>
                                     <td>
                                         <div class="">

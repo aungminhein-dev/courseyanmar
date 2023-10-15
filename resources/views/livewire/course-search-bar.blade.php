@@ -35,7 +35,13 @@
         <li class="nav-item nav-profile dropdown">
             <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
-                    <img src="{{ asset('user/assets/images/faces/face1.jpg') }}" alt="image" />
+                    @if (Auth::user()->image)
+                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="image" />
+                    @elseif (Auth::user()->profile_photo_path )
+                        <img src="{{ Auth::user()->profile_photo_path }}" alt="Google Avatar" />
+                    @else
+                        <img src="{{ asset('user/assets/images/faces/face1.jpg') }}" alt="image" />
+                    @endif
                 </div>
                 <div class="nav-profile-text">
                     <p class="text-black font-weight-semibold m-0">{{ Auth::user()->name }}</p>

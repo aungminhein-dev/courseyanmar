@@ -5,17 +5,16 @@
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     @if ($userDetail->image)
-                        <img src="{{asset('storage/'.$userDetail->image)}}" style="width:150px;" alt="" class="rounded-circle mt-5">
+                        <img src="{{ asset('storage/' . $userDetail->image) }}" style="width:150px;" alt=""
+                            class="rounded-circle mt-5">
                     @else
-                        <img class="rounded-circle mt-5"
-                        width="150px"
-                        src="{{ $userDetail->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}">
+                        <img class="rounded-circle mt-5" width="150px"
+                            src="{{ $userDetail->gender == 'male' ? asset('images/user-male.jpg') : asset('images/female.png') }}">
                     @endif
-                    <span
-                        class="font-weight-bold text-muted">{{ $userDetail->name }}</span><span
+                    <span class="font-weight-bold text-muted">{{ $userDetail->name }}</span><span
                         class="text-black-50">{{ $userDetail->email }}</span>
                     <div class="mt-5 text-center">
-                        <a href="{{ route('admin.changePasswordPage') }}"
+                        <a href="{{ route('user.changePasswordPage') }}"
                             class="btn btn-primary profile-button @if ($userDetail->id != Auth::user()->id) d-none @endif"
                             type="submit">
                             <i class="fa-solid fa-lock"></i>
@@ -46,16 +45,16 @@
                                     class="form-control" name="name" placeholder="Name" value="{{ $userDetail->name }}"
                                     @disabled($userDetail->id != Auth::user()->id)>
                             </div>
-                            <div class="col-md-12 mt-3"><label class="labels text-muted">Mobile Number</label><input type="text"
-                                    class="form-control" name="phone" placeholder="enter phone number"
+                            <div class="col-md-12 mt-3"><label class="labels text-muted">Mobile Number</label><input
+                                    type="text" class="form-control" name="phone" placeholder="enter phone number"
                                     value="{{ $userDetail->phone }}" @disabled($userDetail->id != Auth::user()->id)>
                             </div>
                             <div class="col-md-12 mt-3"><label class="labels text-muted">Email</label><input type="email"
-                                    class="form-control" name="email" placeholder="Email" value="{{ $userDetail->email }}"
-                                    @disabled($userDetail->id != Auth::user()->id)>
+                                    class="form-control" name="email" placeholder="Email"
+                                    value="{{ $userDetail->email }}" @disabled($userDetail->id != Auth::user()->id)>
                             </div>
-                            <div class="col-md-12 mt-3"><label class="labels text-muted">Address</label><input type="text"
-                                    class="form-control" name="address" placeholder="Address"
+                            <div class="col-md-12 mt-3"><label class="labels text-muted">Address</label><input
+                                    type="text" class="form-control" name="address" placeholder="Address"
                                     value="{{ $userDetail->address }}" @disabled($userDetail->id != Auth::user()->id)>
                             </div>
 
@@ -97,17 +96,19 @@
                     @if ($userDetail->role == 'user')
 
                         @if ($userDetail->enrolledCourses)
-                        <h4 class="text-muted">
-                            Enrolled Courses
-                        </h4>
+                            <h4 class="text-muted">
+                                Enrolled Courses
+                            </h4>
                             @foreach ($userDetail->enrolledCourses as $c)
-                                <div class="col-md-4 mt-2">
-                                    <img src="{{ asset('storage/' . $c->image) }}" alt="img"
-                                        class="img-fluid mx-auto d-block rounded" width="100px">
-                                </div>
+                                @if ($c->pivot->status == 1)
+                                    <div class="col-md-4 mt-2">
+                                        <img src="{{ asset('storage/' . $c->image) }}" alt="img"
+                                            class="img-fluid mx-auto d-block rounded" width="100px">
+                                    </div>
+                                @endif
                             @endforeach
                         @else
-                        <h4 class="text-muted">No Enrolled Courses</h4>
+                            <h4 class="text-muted">No Enrolled Courses</h4>
                         @endif
 
                     @endif

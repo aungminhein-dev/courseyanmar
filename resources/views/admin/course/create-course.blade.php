@@ -1,13 +1,15 @@
 @extends('admin.layouts.app')
 @section('content')
     <div class="row" style="min-height: 100vh;">
-        <div class="col-3"></div>
-        <div class="col-lg-6">
+        <div class="col-lg-10 offset-1">
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">Create a Course</div>
                     <hr>
                     <form action="{{ route('admin.createCourse') }}" method="post" enctype="multipart/form-data">
+                        <div class="form-group ">
+                            <img src="" class="w-100 d-block img-fluid" id="my-image" style="max-height: 500px;">
+                        </div>
                         @csrf
                         @if ($errors->any())
                             <div class="alert bg-light form-group py-2">
@@ -65,11 +67,13 @@
 
                         <div class="form-group">
                             <label for="input-10">Image</label>
-                            <input type="file" name="image" class="form-control ">
+                            <input type="file" name="image" class="form-control "  onchange="preview()">
                         </div>
 
+
+
                         <div class="form-group">
-                            <button type="submit" class="btn btn-light btn-round px-5 btn-block"><i class="icon-check"></i>
+                            <button type="submit" class="btn btn-light btn-round btn-block px-5"><i class="icon-check"></i>
                                 Create</button>
                         </div>
                     </form>
@@ -79,6 +83,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-3"></div>
     </div>
+@endsection
+@section('myScript')
+    <script>
+        let frame = document.getElementById('my-image')
+        function preview() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 @endsection

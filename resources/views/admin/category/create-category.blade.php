@@ -9,6 +9,18 @@
                     <hr>
                     <form action="{{ route('admin.createCategory') }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @if ($errors->any())
+                            <div class="alert bg-light form-group py-2">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <div class="form-group">
+                            <img src="" alt="" class="img-fluid w-100" id="my-image">
+                        </div>
                         <div class="form-group">
                             <label for="input-6">Name</label>
                             <input type="text" class="form-control" id="input-6" placeholder="Category Name"
@@ -21,8 +33,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="input-10">Image<span class="text-muted"> (Horizontal photos are recommended)</span></label>
-                            <input type="file" name="image" class="form-control">
+                            <label for="input-10">Image<span class="text-muted"> (Horizontal photos are
+                                    recommended)</span></label>
+                            <input type="file" name="image" onchange="preview()" class="form-control">
                         </div>
 
                         <div class="form-group">
@@ -32,10 +45,19 @@
                     </form>
                 </div>
                 <div class="card-footer">
-                    <a href="{{route('admin.category')}}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i> Back to Category Page</a>
+                    <a href="{{ route('admin.category') }}" class="btn btn-light"><i class="fa-solid fa-arrow-left"></i>
+                        Back to Category Page</a>
                 </div>
             </div>
         </div>
         <div class="col-3"></div>
     </div>
+@endsection
+@section('myScript')
+    <script>
+        let image = document.getElementById('my-image')
+        function preview() {
+            image.src = URL.createObjectURL(event.target.files[0])
+        }
+    </script>
 @endsection

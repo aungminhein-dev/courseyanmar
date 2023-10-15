@@ -17,9 +17,9 @@
                             View this course
                         </a>
                     </div>
-                     <video src="" class="mt-2 rounded" id="lessonVideo" style="width: 100%" autoplay >
+                    <video src="" class="mt-2 rounded" id="lessonVideo" style="width: 100%">
 
-                </video>
+                    </video>
                 </div>
             </div>
             <div class="col-md-9 ">
@@ -87,7 +87,16 @@
         const mediaInput = $('#mediaInput');
 
         mediaInput.change(function(event) {
-            video.attr('src', URL.createObjectURL(event.target.files[0]));
+            const selectedFile = event.target.files[0];
+
+            // Check if a file was selected
+            if (selectedFile) {
+                // Update the video source to the selected file
+                video.attr('src', URL.createObjectURL(selectedFile));
+            } else {
+                // Clear the video source if no file is selected
+                video.attr('src', '');
+            }
         });
     </script>
 @endsection

@@ -9,9 +9,18 @@
                      <div class="card-title">Edit Category</div>
                 <hr>
                     <div class="row p-2">
-                        <img src="{{asset('storage/'.$chosenItem->image)}}" alt="" class="img-fluid rounded d-block mx-auto" style="height: 500px">
+                        <img src="{{asset('storage/'.$chosenItem->image)}}" alt="" class="img-fluid rounded d-block mx-auto" id="my-image">
                     </div>
                     <form action="{{ route('admin.updateCategory') }}" method="post" enctype="multipart/form-data">
+                        @if ($errors->any())
+                            <div class="alert bg-light form-group py-2">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         @csrf
                         <input type="hidden" name="id" value="{{$chosenItem->id}}">
                         <div class="form-group">
@@ -27,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <label for="input-10">Image <span class="text-muted">(Horizontal photos are recommended)</span></label>
-                            <input type="file" name="image" class="form-control">
+                            <input type="file" onchange="preview()" name="image" class="form-control">
                         </div>
 
                         <div class="form-group">
@@ -43,4 +52,12 @@
         </div>
         <div class="col-3"></div>
     </div>
+@endsection
+@section('myScript')
+<script>
+        let frame = document.getElementById('my-image')
+        function preview(){
+            frame.src = URL.createObjectURL(event.target.files[0])
+        }
+</script>
 @endsection

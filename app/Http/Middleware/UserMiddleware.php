@@ -11,15 +11,12 @@ class UserMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if the user is authenticated
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            if ($user->role == 'admin') {
+        if(!empty(Auth::user())){
+            if(url()->current() == route('guest.login') || url()->current() == route('guest.register') || url()->current() == route('guest.index') || Auth::user()->role == 'admin'){
                 return back();
             }
+            return $next($request);
         }
-
         return $next($request);
     }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Enrollment;
 use App\Models\DenyReason;
+use App\Models\Enrollment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -41,11 +42,7 @@ class OrderController extends Controller
         return view('admin.order.detail',compact('enrollment'));
     }
 
-    public function getStatusAndCount()
-    {
-        $data = Enrollment::where('order_status','new')->count();
-        return response()->json($data, 200);
-    }
+
 
     // order accept
     public function orderAccept(Request $request)
@@ -65,7 +62,8 @@ class OrderController extends Controller
         ]);
         DenyReason::create([
             'description' => $request->description,
-            'enrollment_id'=> $request->enrollmentId
+            'enrollment_id'=> $request->enrollmentId,
+            'admin_name' => Auth::user()->name
         ]);
         toastr()->success('An order has been denied','Action Completed!');
         return back();

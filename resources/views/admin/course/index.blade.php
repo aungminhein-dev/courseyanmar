@@ -58,7 +58,7 @@
                                 <div class="postcard__bar"></div>
                                 <div class="postcard__preview-txt">{{ $c->description }}</div>
                                 <ul class="postcard__tagbox">
-                                    <li class="tag__item"><i class="fas fa-tag mr-2"></i>{{ $c->category->name }}</li>
+                                    <li class="tag__item text-uppercase"><i class="fas fa-tag mr-2"></i>{{ $c->category->name }}</li>
 
                                     <li class="tag__item"><i class="fas fa-person mr-2"></i>{{ $c->buyer_count }}</li>
                                     <li class="tag__item"><i class="fas fa-eye mr-2"></i>{{ $c->view_count }}</li>
@@ -79,11 +79,12 @@
                             </div>
                         </article>
                     </div>
-                    <div class="mt-2 px-2">
-                        {{ $courses->links() }}
-                    </div>
+
                 </section>
             @endforeach
+            <div class="mt-2 px-2">
+                {{ $courses->links() }}
+            </div>
         @else
             <div class="container-fluid">
                 <h4 class="text-warning text-center">No Courses yet!</h4>
